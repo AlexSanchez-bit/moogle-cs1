@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-	  <ProjectReference Include="../TextRepresentation/TextRepresentation.csproj"/>
+	  <ProjectReference Include="../TextTreatment/TextTreatment.csproj" />
+	  <ProjectReference Include="../AlgeTool/AlgeTool.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
