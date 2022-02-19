@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using TextTreatment;
 namespace TextRepresentation;
 public class Document:BaseText
 {
@@ -48,18 +49,17 @@ return false;
 
 	private int CalculateMinDistance(int[] positions1,int[] positions2)
 	{
-	    int minDistance=int.MaxValue;
-	    for(int i=0;i< positions1.Length;i++)
-	    {
-		for(int j=0;j<positions2.Length;i++)
+		int interestTerms = Math.Min(positions1.Length,positions2.Length);
+		int minDistance=int.MaxValue;
+
+		for(int i=1;i<interestTerms;i++)
 		{
-			int dist = Math.Abs(positions2[i]-positions2[j]);
-			if(dist<minDistance)
-			{
-			minDistance = dist;
-			}
+			int aux=Math.Abs(positions1[i]-positions2[i]);
+		  if(aux< minDistance)
+		  {
+			minDistance=aux;
+		  }
 		}
-	    }
-	    return minDistance;
+		return minDistance;
 	}
 }

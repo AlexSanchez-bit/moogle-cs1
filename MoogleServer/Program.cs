@@ -1,7 +1,10 @@
+using SearchEngine;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Searcher.GetSingleInstance();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

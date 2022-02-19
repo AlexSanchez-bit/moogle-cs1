@@ -17,20 +17,20 @@ public class WordInfo
     {
 	    int[] positions=new int[indexedPositions.Count];
 	    int index=0;
-	    foreach(var pair in indexedPositions)
+	    foreach(var position in indexedPositions)
 	    {
-		    positions[index++]=pair.Item2;
+		    positions[index++]=position;
 	    }
 	    return positions;
     }
 
     public string[] OriginalTerms()
     {
-	    string[] terms=new int[indexedWords.Count];
+	    string[] terms=new string[indexedWords.Count];
 	    int index=0;
-	    foreach(var pair in indexedWords)
+	    foreach(var term in indexedWords)
 	    {
-		    terms[index++]=pair.Item2;
+		    terms[index++]=term;
 	    }
 	    return terms;
     }

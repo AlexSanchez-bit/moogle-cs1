@@ -37,7 +37,7 @@ public static class Stemmer {
 
 #endregion
 
-    public static string Stemize(string w) {
+    public static string Stemize(string word) {
         int r1, r2, rv;
         (r1, r2, rv) = Get_R1_R2_RV(word);
         int n = word.Length;
@@ -51,7 +51,7 @@ public static class Stemmer {
 
         word1 = Step3(word1, n - r1, n - r2, n - rv);
 
-        return AuxiliarMethods.NormalizeWord( word1 ); 
+        return word1 ; 
     }
 
 

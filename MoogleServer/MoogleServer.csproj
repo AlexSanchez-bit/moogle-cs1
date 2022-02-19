@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoogleEngine\MoogleEngine.csproj" />
+    <ProjectReference Include="..\SearchEngine\SearchEngine.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -58,6 +58,17 @@ public class Vector
 		return v1+(v2*-1);
 	}
 
+	public  string ToString()
+	{
+	string retValue="(";
+	foreach(var a in vector)
+	{
+		retValue+=a+",";
+	}
+
+	return retValue+")";
+	}
+
 private static void CheckNullVector(Vector v1){ if( v1==null) throw new System.Exception("Vector no puede ser null");}
 private static bool Check_Dimentions(Vector v1,Vector v2){ return v1.Size==v2.Size;}
 	//metodos auxiliares

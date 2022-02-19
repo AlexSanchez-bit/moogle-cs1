@@ -1,5 +1,4 @@
 ﻿using TextTreatment;
-using Algetool;
 namespace TextRepresentation;
 public class BaseText 
 {
@@ -18,16 +17,16 @@ public class BaseText
 	{
 		var Tokens = GetTokens(text);
                  int index =0;
-		foreach(var token in TextProcessor.ProcessWords(Tokens))
+		foreach(var token in Tokens)
 		{
-			var processedWord = ProcessWords.GetStem(token);
+			var processedWord = TextProcessor.GetStem(token);
 			if(!terms.ContainsKey(processedWord))
 			{
 				terms.Add(processedWord,new WordInfo(token,index++));
 				continue;
 			}
 
-			terms[token].AddPos(token,index++);
+			terms[processedWord].AddPos(token,index++);
 		}
 	}
 

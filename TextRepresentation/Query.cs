@@ -1,11 +1,22 @@
-﻿namespace TextRepresentation;
+﻿using TextTreatment;
+namespace TextRepresentation;
 enum Direction{Forward,Backward}
 public class Query:BaseText
 {
 	Dictionary<string,LinkedList<string>> operatorList;
 	public Query(string text):base()
 	{
+		Console.WriteLine(text);
 		text=RemoveOperators(text.ToLower());
+		Console.WriteLine(text);
+		foreach(var a in operatorList)
+		{
+			Console.WriteLine(a.Key);
+			foreach(var b in a.Value)
+			{
+			Console.WriteLine("    "+b);
+			}
+		}
 		FillTerms(text);	
 	}
 
@@ -14,9 +25,10 @@ public class Query:BaseText
 		return operatorList.Keys;		
 	}
 		
-	public IEnumerable<string> GetOperatorWords(string operator)
+	public IEnumerable<string> GetOperatorWords(string Operator)
 	{
-		return operatorList[operator];
+		if(operatorList.ContainsKey(Operator))return operatorList[Operator];
+		return new string[0];
 	}
 
 	private string RemoveOperators(string text)
@@ -24,58 +36,65 @@ public class Query:BaseText
 		operatorList= new Dictionary<string,LinkedList<string>>();
 	  string retValue="";
 
-	  foreach(char a in text)
+	  for(int i=0;i<text.Length;i++)
 	  {
-		if(!IsOperator(a))
+		if(!IsOperator(text[i]))
 		{
-			retValue+=a;
+			retValue+=text[i];
 		}
 		else
 		{
-		    ProcessOperator(a); 
+		    ProcessOperator(text,text[i],ref i); 
+			retValue+=" ";
 		}
 
 	  }
 	  return retValue;
 	}
 
-	private void ProcessOperator(string text,char op,int position)
+	private void ProcessOperator(string text,char op,ref int position)
 	{
+		string toSaveWord ="";
 			switch(op)
 			{
 				case '^':
-				var toSaveWord = GetWord(text,position+1,Direction.Forward);
+				 toSaveWord = GetWord(text,position+1,Direction.Forward);
 				SaveOperatorWord("^",toSaveWord);
 				break;
 
 				case '!':
-				var toSaveWord = TextProcessor.ProcessWord(GetWord(text,position+1,Direction.Forward));
+				 toSaveWord = TextProcessor.ProcessWord(GetWord(text,position+1,Direction.Forward));
 				SaveOperatorWord("!",toSaveWord);
 				break;
 
 				case '*':
 				string finaloperator ="*";
-				while(text[position++]<text.Length && text[position]=='*')finaloperator+='*';
-				var toSaveWord = TextProcessor.ProcessWord(GetWord(text,position,Direction.Forward));
+				while(position<text.Length && text[position]=='*')
+				{
+					finaloperator+='*';
+					position++;
+				}
+				 toSaveWord = TextProcessor.ProcessWord(GetWord(text,position,Direction.Forward));
 				SaveOperatorWord(finaloperator,toSaveWord);
 				break;
 
 				case '~':
-				var toSaveWord1 = TextProcessor.ProcessWord(GetWord(text,position+1,Direction.Forward));
-				var toSaveWord2 = TextProcessor.ProcessWord(GetWord(text,position-1,Direction.Backward));
+				var toSaveWord1 = (GetWord(text,position+1,Direction.Forward));
+				var toSaveWord2 = (GetWord(text,position-1,Direction.Backward));
 				SaveOperatorWord("~",toSaveWord1);
-				SaveOperatorWord("~",toSaveWord2);
+				SaveOperatorWord("~",toSaveWord2);				
+				break;
 			}		
 	}
 
-	private void SaveOperatorWord(string operator,string word)
+	private void SaveOperatorWord(string Operator,string word)
 	{
 		if(word==null || word=="")return;
-	   if(!operatorList.ContainsKey(operator))
+	   if(!operatorList.ContainsKey(Operator))
 	   {
-		   operatorList.Add(operator,new LinkedList<string>());
+		   operatorList.Add(Operator,new LinkedList<string>());
 	   }		
-	   operatorList[operator].AddLast(word);
+	   operatorList[Operator].AddLast(word);
 	}
 
 	private string GetWord(string text,int position,Direction direction)
@@ -84,16 +103,19 @@ public class Query:BaseText
 		string retVal="";
 		if(direction==Direction.Forward)
 		{
-			for(;i<text.Length && text[i]!=" ";i++)
+			if(text[i]==' ')i++;
+			for(;i<text.Length && text[i]!=' ';i++)
 			{
 			  		retVal+=text[i];		
 			}
 
 		}else{
-			for(;i>0 && text[i]!=" ";i--)
+			if(text[i]==' ')i--;
+			for(;i>=0 && text[i]!=' ';i--)
 			{
 			  	retVal+=text[i];	
 			}
+			
 		}
 		return retVal;
 	}

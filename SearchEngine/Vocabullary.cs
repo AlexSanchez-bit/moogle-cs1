@@ -1,4 +1,5 @@
 ﻿using TextRepresentation;
+using AlgeTool;
 namespace SearchEngine;
 public class Vocabullary
 {
@@ -11,10 +12,11 @@ public class Vocabullary
 	{
 		corpus=new Dictionary<string, LinkedList<Document>>();
 		vectorizedDocs = new Dictionary<string, Vector>();
+		corpusSize = documents.Length;
 
 		foreach(var doc in documents)
 		{
-			foreach(var term in documents.GetTerms())
+			foreach(var term in doc.GetTerms())
 			{
 			   if(!corpus.ContainsKey(term))
 			   {
@@ -34,8 +36,9 @@ public class Vocabullary
 	public IEnumerable<Document> GetSearchSpace(Query query)
 	{
 		LinkedList<Document> docList = new LinkedList<Document>();
-		foreach(var term in query.GetTerms)
+		foreach(var term in query.GetTerms())
 		{		    			
+			if(!corpus.ContainsKey(term))continue;
 			if(ContainsWord(query.GetOperatorWords("!"),term))continue;
 			foreach(var doc in corpus[term])
 			{
@@ -50,16 +53,18 @@ public class Vocabullary
 		return docList;
 	}
 
+	public Vector GetDocVector(string name)
+	{
+		return vectorizedDocs[name];
+	}
 
-	
-
-	
 	private bool ContainsWord(IEnumerable<string> words,string term)
 	{
-		return words.Contains(term);
+		return words!=null && words.Contains(term);
 	}
 	private bool SatisfyOperatosHas(IEnumerable<string> words,Document doc)
 	{
+		if(words==null)return true;
 		foreach(var wrd in words)
 		{
 			if(!doc.ContainsWord(wrd))return false;
@@ -73,14 +78,14 @@ public class Vocabullary
 		int index=0;
 		foreach(var term in corpus)
 		{
-			ret_value[index++]=(float)text.GetTermFrequency(term)*CalculateIdf(term);
+			ret_value[index++]=(float)text.GetTermFrequency(term.Key)*CalculateIdf(term.Key);
 		}
 		return ret_value;
 	}
 
 	private float CalculateIdf(string term)
 	{
-		return (float)Math.Log10((float)corpusSize/(float)corpus[term].Count);
+		return (float)Math.Log10((float)(corpusSize/corpus[term].Count));
 	}
 
 }

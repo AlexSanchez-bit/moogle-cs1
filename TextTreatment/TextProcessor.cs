@@ -14,7 +14,7 @@ public static class TextProcessor
 	    return Stemmer.Stemize(Original);
 	}
 
-	private static string ProcessWord(string word)
+	public static string ProcessWord(string word)
 	{
 		return RemoveSigns(ProcessNumbers(word));
 	}	
