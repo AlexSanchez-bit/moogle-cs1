@@ -6,17 +6,7 @@ public class Query:BaseText
 	Dictionary<string,LinkedList<string>> operatorList;
 	public Query(string text):base()
 	{
-		Console.WriteLine(text);
 		text=RemoveOperators(text.ToLower());
-		Console.WriteLine(text);
-		foreach(var a in operatorList)
-		{
-			Console.WriteLine(a.Key);
-			foreach(var b in a.Value)
-			{
-			Console.WriteLine("    "+b);
-			}
-		}
 		FillTerms(text);	
 	}
 

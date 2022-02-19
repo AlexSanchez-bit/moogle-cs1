@@ -38,10 +38,12 @@ public class Vocabullary
 		LinkedList<Document> docList = new LinkedList<Document>();
 		foreach(var term in query.GetTerms())
 		{		    			
+			Console.WriteLine("["+term+"]");
 			if(!corpus.ContainsKey(term))continue;
-			if(ContainsWord(query.GetOperatorWords("!"),term))continue;
+			if(IsForbiddenWord(query.GetOperatorWords("!"),term))continue;
 			foreach(var doc in corpus[term])
 			{
+			if(ContainsWords(query.GetOperatorWords("!"),doc))continue;
 				if(!SatisfyOperatosHas(query.GetOperatorWords("^"),doc))continue;
 			    if(!docList.Contains(doc))
 			    {
@@ -58,9 +60,22 @@ public class Vocabullary
 		return vectorizedDocs[name];
 	}
 
-	private bool ContainsWord(IEnumerable<string> words,string term)
+	private bool IsForbiddenWord(IEnumerable<string> words,string term)
 	{
-		return words!=null && words.Contains(term);
+		if(words==null)return false;
+		return words.Contains(term);
+	}
+
+	private bool ContainsWords(IEnumerable<string> words,Document document)
+	{
+		foreach(var word in words)
+		{
+			if(document.GetTermFrequency(word)>0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	private bool SatisfyOperatosHas(IEnumerable<string> words,Document doc)
 	{

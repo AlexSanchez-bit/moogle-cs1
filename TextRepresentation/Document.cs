@@ -22,10 +22,10 @@ public class Document:BaseText
 
 	public int GetMinDistance(string term,string term2)
 	{
-	  var tp1 = this.GetTerm(term).GetPositions();
-	  var tp2 = this.GetTerm(term2).GetPositions();
-          
-	  return CalculateMinDistance(tp1,tp2);
+	  var tp1 = this.GetTerm(term);
+	  var tp2 = this.GetTerm(term2);
+         	if(tp1==null || tp2==null)return -1; 
+	  return CalculateMinDistance(tp1.GetPositions(),tp2.GetPositions());
 
 	}
 
@@ -33,9 +33,9 @@ public class Document:BaseText
 	{
 		
 		var transformedWord=TextProcessor.ProcessWord(word);
-		if(this.GetTerm(transformedWord)==null)return false;
-		var info = this.GetTerm(transformedWord).OriginalTerms();
-		foreach(var aux in info)
+		var info = this.GetTerm(transformedWord);
+		if(info==null)return false;
+		foreach(var aux in info.OriginalTerms())
 		{
 			if(aux==word)
 			{

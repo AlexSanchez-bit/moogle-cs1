@@ -38,21 +38,35 @@ public class Searcher
 	 var queryVector = bagOfWords.VectorizeDoc(queryObj);
 	 var searchEspace = bagOfWords.GetSearchSpace(queryObj);
 	 var lista = new LinkedList<(string,string,float)>();
-
 	 foreach(var doc in searchEspace)
 	 {
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
-		 var snippet = doc.Snippet +" "+ (documentVector*queryVector);		
+		 float distance = (documentVector*queryVector);
+			distance/=GetMinDistance(queryObj,doc);
+		 var snippet = doc.Snippet +" "+ distance ;		
 
-		lista.AddLast((doc.Name,snippet,documentVector*queryVector));
+		lista.AddLast((doc.Name,snippet,distance));
 	 }
 	return lista;
 	}
 
-	private int GetMinDistance(string word,Document doc,Query queryObj)
+	private int GetMinDistance(Query queryObj,Document doc)
 	{
-	  int MinDistance = 0;  
-	  return MinDistance;
+		var words = queryObj.GetOperatorWords("~");		
+		int MinDistance = int.MaxValue;		
+		string ant="";
+		foreach(var aux in words)
+		{
+			if(ant=="")ant=aux;
+			if(ant!="")
+			{
+				int dist = doc.GetMinDistance(aux,ant);
+				ant="";				
+				if(dist>0 && dist<MinDistance)MinDistance=dist;
+			}
+			
+		}
+	return MinDistance==int.MaxValue?1:MinDistance;
 	}
 	
 

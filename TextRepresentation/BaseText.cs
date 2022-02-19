@@ -19,7 +19,7 @@ public class BaseText
                  int index =0;
 		foreach(var token in Tokens)
 		{
-			var processedWord = TextProcessor.GetStem(token);
+			var processedWord = TextProcessor.ProcessWord(token);
 			if(!terms.ContainsKey(processedWord))
 			{
 				terms.Add(processedWord,new WordInfo(token,index++));
