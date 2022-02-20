@@ -38,17 +38,14 @@ public class Vocabullary
 		LinkedList<Document> docList = new LinkedList<Document>();
 		foreach(var term in query.GetTerms())
 		{		    			
-			Console.WriteLine("["+term+"]");
 			if(!corpus.ContainsKey(term))continue;
 			if(IsForbiddenWord(query.GetOperatorWords("!"),term))continue;
 			foreach(var doc in corpus[term])
 			{
+			    if(docList.Contains(doc))continue;
 			if(ContainsWords(query.GetOperatorWords("!"),doc))continue;
 				if(!SatisfyOperatosHas(query.GetOperatorWords("^"),doc))continue;
-			    if(!docList.Contains(doc))
-			    {
 				docList.AddLast(doc);
-			    }
 			}
 		}
 
@@ -93,7 +90,7 @@ public class Vocabullary
 		int index=0;
 		foreach(var term in corpus)
 		{
-			ret_value[index++]=(float)text.GetTermFrequency(term.Key)*CalculateIdf(term.Key);
+			ret_value[index++]=(float)(text.GetTermFrequency(term.Key)/(float)text.WordCount())*CalculateIdf(term.Key);
 		}
 		return ret_value;
 	}

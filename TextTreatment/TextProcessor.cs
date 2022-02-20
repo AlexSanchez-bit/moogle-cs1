@@ -33,9 +33,13 @@ return retstring;
 	}
 
 	private static string ProcessNumbers(string word)
-	{
+	{		
             int numberPosition=0;
-	    while(numberPosition<word.Length && char.IsNumber(word[numberPosition++])){}
+	    if(word.Length==0)
+	    {
+		return word;
+	    }
+	    while(numberPosition<word.Length && char.IsNumber(word[numberPosition]))numberPosition++;
 	    if(numberPosition>=word.Length)
 	    {
 		return "NUMBER";
@@ -44,10 +48,10 @@ return retstring;
 	    {
 		return "TIME";
 	    }else if(word[numberPosition]=='.')
-		{
+	    {
 			return "CODE";
-		}
-		else if(word[numberPosition]=='/')
+	     }
+	else if(word[numberPosition]=='/')
 	    {
 		return "DATE";
 	    }
@@ -55,7 +59,6 @@ return retstring;
 	    {
 		return word;
 	    }
-
 	} 
 
 }

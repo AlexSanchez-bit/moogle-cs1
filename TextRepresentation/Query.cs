@@ -4,10 +4,12 @@ enum Direction{Forward,Backward}
 public class Query:BaseText
 {
 	Dictionary<string,LinkedList<string>> operatorList;
+	private int highestFrequency;
 	public Query(string text):base()
 	{
 		text=RemoveOperators(text.ToLower());
 		FillTerms(text);	
+		highestFrequency=GetHighestFrequency();
 	}
 
     public IEnumerable<string> GetOperatorList()
@@ -19,6 +21,32 @@ public class Query:BaseText
 	{
 		if(operatorList.ContainsKey(Operator))return operatorList[Operator];
 		return new string[0];
+	}
+
+	public override int GetTermFrequency(string term)
+	{
+		var original = this.GetFrequency(term);
+	   foreach(var aux in operatorList.Where(elem=>elem.Key[0]=='*'))
+	   {
+		   if(aux.Value.Contains(term))
+		   {
+			highestFrequency*=aux.Key.Length;
+			original+=highestFrequency;
+		   }
+	   }
+	   return original;
+	}
+
+
+	private int GetHighestFrequency()
+	{
+		int maximun=0;
+		foreach(var aux in this.GetTerms())
+		{
+		   int frequency = this.GetTermFrequency(aux);
+		   if(frequency>maximun)maximun=frequency;
+		}
+		return maximun;
 	}
 
 	private string RemoveOperators(string text)
@@ -58,8 +86,8 @@ public class Query:BaseText
 				break;
 
 				case '*':
-				string finaloperator ="*";
-				while(position<text.Length && text[position]=='*')
+				string finaloperator ="";
+				while(position < text.Length-1 && text[position+1]=='*')
 				{
 					finaloperator+='*';
 					position++;

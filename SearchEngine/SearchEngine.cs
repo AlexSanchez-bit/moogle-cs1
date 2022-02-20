@@ -21,9 +21,26 @@ public class Searcher
 	{
 		var directory = Directory.GetFiles(Path.Join("../Content")); 
 		Document[] docs = new Document[directory.Length];
+		int loadedDocs=0;
 		for(int i=0;i<docs.Length;i++)
 		{
 			docs[i] = new Document(directory[i]);
+			loadedDocs++;
+			Console.Clear();
+			Console.SetCursorPosition((Console.WindowWidth/2)-10,Console.WindowHeight/2);
+			Console.BackgroundColor = ConsoleColor.Green;
+			Console.ForegroundColor = ConsoleColor.Red;
+			float percentage = (float)loadedDocs/(float)docs.Length;
+			Console.Write('[');
+			for(int j =0;j< (int)(percentage*20) ;j++)			
+			{
+			Console.Write('*');
+			}
+			Console.Write(']');
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.Write(" "+percentage*100+"%\n");
+
 		}
 		Console.WriteLine("Documentos Guardados");
 				
