@@ -37,14 +37,14 @@ public class BaseText
 	}
 
 
-	private string[] GetTokens(string text)
+	protected string[] GetTokens(string text)
 	{
 	return ReduceText(text).Split(" ");
 	}
 
 	private string ReduceText(string text)
 	{
-	  return text.ToLower()
+	  return text
 		  .Replace('\n',' ')
 		  .Replace(',',' ')
 		  .Replace(';',' ')		

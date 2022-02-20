@@ -34,6 +34,12 @@ public static class Stemmer {
 
     private static string[] step3a = {"os", "a", "o", "á", "í", "ó"};
     private static string[] step3b = {"e", "é"};
+    private static bool IsVocal(char x) {
+        return vowels.Contains( x );
+    }
+    private static bool IsConsonant(char x) {
+        return  !IsVocal( x );
+    }
 
 #endregion
 
@@ -299,12 +305,6 @@ public static class Stemmer {
 
 
 
-    private static bool IsVocal(char x) {
-        return vowels.Contains( x );
-    }
-    private static bool IsConsonant(char x) {
-        return  !IsVocal( x );
-    }
 
 
 

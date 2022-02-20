@@ -14,10 +14,24 @@ public static class TextProcessor
 	    return Stemmer.Stemize(Original);
 	}
 
+
 	public static string ProcessWord(string word)
 	{
-		return GetStem(RemoveSigns(ProcessNumbers(word.ToLower())));
+		return GetStem(RemoveSigns(ProcessNumbers(Normalize(word))));
 	}	
+
+	private static string Normalize(string original)
+	{
+		return original
+			.ToLower()
+			.Replace('á','a')
+			.Replace('é','e')
+			.Replace('í','i')
+			.Replace('ó','o')
+			.Replace('ú','u')
+			.Replace('ñ','n');
+
+	}
 
 	private static string RemoveSigns(string wrd)
 	{

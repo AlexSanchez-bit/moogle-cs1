@@ -90,7 +90,7 @@ public class Vocabullary
 		int index=0;
 		foreach(var term in corpus)
 		{
-			ret_value[index++]=(float)(text.GetTermFrequency(term.Key)/(float)text.WordCount())*CalculateIdf(term.Key);
+			ret_value[index++]=(float)(text.GetTermFrequency(term.Key))*CalculateIdf(term.Key);
 		}
 		return ret_value;
 	}

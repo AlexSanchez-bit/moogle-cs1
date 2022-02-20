@@ -1,8 +1,15 @@
+
 .results {
-    text-align: left;
+    text-align: center;
 }
 
 .item .title {
     font-size: large;
     font-weight: bold;
+}
+
+.results li
+{
+	background-color:blue;
+	margin:20px;
 }

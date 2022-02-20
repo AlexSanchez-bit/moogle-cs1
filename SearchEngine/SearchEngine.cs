@@ -68,7 +68,7 @@ public class Searcher
 	 {
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
 		 float distance = (documentVector*queryVector);
-			distance/=GetMinDistance(queryObj,doc);
+			distance/=(float)GetMinDistance(queryObj,doc);
 		 var snippet = "<h1>"+ distance+" </h1> "+doc.Snippet(queryObj.GetTerms()) ;		
 
 		lista.AddLast((doc.Name,snippet,distance));
@@ -80,19 +80,24 @@ public class Searcher
 	{
 		var words = queryObj.GetOperatorWords("~");		
 		int MinDistance = int.MaxValue;		
+		bool huboCambio=false;
 		string ant="";
 		foreach(var aux in words)
 		{
 			if(ant=="")ant=aux;
-			if(ant!="")
+			else
 			{
 				int dist = doc.GetMinDistance(aux,ant);
 				ant="";				
-				if(dist>0 && dist<MinDistance)MinDistance=dist;
+				if(dist>0 && dist<MinDistance)
+				{
+					MinDistance=dist;
+					huboCambio=true;
+				}
 			}
 			
 		}
-	return MinDistance==int.MaxValue?100:MinDistance;
+	return huboCambio?MinDistance:1;
 	}
 	
 

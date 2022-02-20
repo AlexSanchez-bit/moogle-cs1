@@ -43,7 +43,7 @@ public class Query:BaseText
 		int maximun=0;
 		foreach(var aux in this.GetTerms())
 		{
-		   int frequency = this.GetTermFrequency(aux);
+		   int frequency = this.GetFrequency(aux);
 		   if(frequency>maximun)maximun=frequency;
 		}
 		return maximun;
@@ -86,7 +86,7 @@ public class Query:BaseText
 				break;
 
 				case '*':
-				string finaloperator ="";
+				string finaloperator ="*";
 				while(position < text.Length-1 && text[position+1]=='*')
 				{
 					finaloperator+='*';
@@ -97,8 +97,8 @@ public class Query:BaseText
 				break;
 
 				case '~':
-				var toSaveWord1 = (GetWord(text,position+1,Direction.Forward));
-				var toSaveWord2 = (GetWord(text,position-1,Direction.Backward));
+				var toSaveWord1 = TextProcessor.ProcessWord(GetWord(text,position+1,Direction.Forward));
+				var toSaveWord2 = TextProcessor.ProcessWord(GetWord(text,position-1,Direction.Backward));
 				SaveOperatorWord("~",toSaveWord1);
 				SaveOperatorWord("~",toSaveWord2);				
 				break;
@@ -132,10 +132,20 @@ public class Query:BaseText
 			for(;i>=0 && text[i]!=' ';i--)
 			{
 			  	retVal+=text[i];	
-			}
-			
+			}		
+		retVal=Reverse(retVal);	
 		}
 		return retVal;
+	}
+
+	private string Reverse(string word)
+	{
+		string retval="";
+		for(int i =word.Length-1 ;i>0;i--)
+		{
+		  retval+=word[i];
+		}
+		return retval;
 	}
 
     private bool IsOperator(char op)

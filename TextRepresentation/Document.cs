@@ -10,6 +10,7 @@ public class Document:BaseText
 	public Document(string path):base()
 	{
 		var route = path.Split( Path.PathSeparator);
+		this.path=path;
 		name = route[route.Length-1];	
 	  StreamReader sr = new StreamReader(path);	
 	  var lecture =sr.ReadToEnd();
@@ -21,7 +22,24 @@ public class Document:BaseText
 	public string Route{get{return path;}}
 	public string Snippet(IEnumerable<string> terms)
 	{
-	     return this.snippet; 
+		StreamReader str = new StreamReader(this.path);
+		string lecture = str.ReadToEnd();
+		var processlecture = GetTokens(lecture);
+		int position=0;
+		foreach(var term in terms)
+		{
+			if(this.GetFrequency(term)>0)
+			{
+				position=GetTerm(term).GetPositions()[0];
+				break;
+			}
+		}
+		string snippet ="";
+		for(int i = position;i<processlecture.Length && i<20;i++)
+		{
+		  snippet+=processlecture[i]+" ";
+		}
+		return snippet;
 	}
 
 	public int GetMinDistance(string term,string term2)
@@ -55,11 +73,10 @@ return false;
 	{
 		int interestTerms = Math.Min(positions1.Length,positions2.Length);
 		int minDistance=int.MaxValue;
-
 		for(int i=1;i<interestTerms;i++)
 		{
-			int aux=Math.Abs(positions1[i]-positions2[i]);
-		  if(aux< minDistance)
+			int aux =(int) Math.Abs(positions1[i]-positions2[i-1]);
+		  if(aux<minDistance)
 		  {
 			minDistance=aux;
 		  }
