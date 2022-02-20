@@ -9,7 +9,7 @@ public class Document:BaseText
 
 	public Document(string path):base()
 	{
-		var route = path.Split(Path.PathSeparator);
+		var route = path.Split( Path.PathSeparator);
 		name = route[route.Length-1];	
 	  StreamReader sr = new StreamReader(path);	
 	  var lecture =sr.ReadToEnd();
@@ -18,7 +18,11 @@ public class Document:BaseText
 	}
 
   	public string Name{get{return name;}}	
-	public string Snippet{get{return snippet;}}
+	public string Route{get{return path;}}
+	public string Snippet(IEnumerable<string> terms)
+	{
+	     return this.snippet; 
+	}
 
 	public int GetMinDistance(string term,string term2)
 	{

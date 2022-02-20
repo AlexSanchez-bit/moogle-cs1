@@ -27,14 +27,23 @@ public class Searcher
 			docs[i] = new Document(directory[i]);
 			loadedDocs++;
 			Console.Clear();
+			Console.SetCursorPosition((Console.WindowWidth/2)-10,(Console.WindowHeight/2)-1);
+			Console.Write("Cargando Documentos");
+			for(int k=0;k<i%4;k++)
+			{
+				Console.Write(".");
+			}
+			Console.WriteLine();
 			Console.SetCursorPosition((Console.WindowWidth/2)-10,Console.WindowHeight/2);
 			Console.BackgroundColor = ConsoleColor.Green;
 			Console.ForegroundColor = ConsoleColor.Red;
 			float percentage = (float)loadedDocs/(float)docs.Length;
 			Console.Write('[');
-			for(int j =0;j< (int)(percentage*20) ;j++)			
+			for(int j =0;j<20;j++)			
 			{
-			Console.Write('*');
+				if(j<(int)(percentage*20))Console.Write('*');
+				else Console.Write(" ");
+			
 			}
 			Console.Write(']');
 			Console.BackgroundColor = ConsoleColor.Black;
@@ -60,7 +69,7 @@ public class Searcher
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
 		 float distance = (documentVector*queryVector);
 			distance/=GetMinDistance(queryObj,doc);
-		 var snippet = doc.Snippet +" "+ distance ;		
+		 var snippet = "<h1>"+ distance+" </h1> "+doc.Snippet(queryObj.GetTerms()) ;		
 
 		lista.AddLast((doc.Name,snippet,distance));
 	 }
@@ -83,7 +92,7 @@ public class Searcher
 			}
 			
 		}
-	return MinDistance==int.MaxValue?1:MinDistance;
+	return MinDistance==int.MaxValue?100:MinDistance;
 	}
 	
 

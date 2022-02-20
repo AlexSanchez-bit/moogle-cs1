@@ -16,7 +16,7 @@ public static class TextProcessor
 
 	public static string ProcessWord(string word)
 	{
-		return GetStem(RemoveSigns(ProcessNumbers(word)));
+		return GetStem(RemoveSigns(ProcessNumbers(word.ToLower())));
 	}	
 
 	private static string RemoveSigns(string wrd)
