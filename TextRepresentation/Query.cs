@@ -92,7 +92,7 @@ public class Query:BaseText
 					finaloperator+='*';
 					position++;
 				}
-				 toSaveWord = TextProcessor.ProcessWord(GetWord(text,position,Direction.Forward));
+				 toSaveWord = TextProcessor.ProcessWord(GetWord(text,position+1,Direction.Forward));
 				SaveOperatorWord(finaloperator,toSaveWord);
 				break;
 
@@ -119,17 +119,18 @@ public class Query:BaseText
 	{
 		int i=position;
 		string retVal="";
+		Console.WriteLine(text[i]);
 		if(direction==Direction.Forward)
 		{
 			if(text[i]==' ')i++;
-			for(;i<text.Length && text[i]!=' ';i++)
+			for(;i<text.Length && (text[i]!=' ' && !IsOperator(text[i]));i++)
 			{
 			  		retVal+=text[i];		
 			}
 
 		}else{
 			if(text[i]==' ')i--;
-			for(;i>=0 && text[i]!=' ';i--)
+			for(;i>=0 &&(text[i]!=' ' && !IsOperator(text[i]));i--)
 			{
 			  	retVal+=text[i];	
 			}		

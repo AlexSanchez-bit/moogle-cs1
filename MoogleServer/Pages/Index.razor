@@ -1,5 +1,20 @@
-﻿@page "/"
+﻿@page "/{query?}"
+@page "/"
 
+<style>
+
+.results
+{
+ list-style:none; 
+ .item
+ {
+	border-radius:10px;
+	border:10px BLACK solid;
+ }
+
+}
+
+</style>
 <PageTitle>Moogle!</PageTitle>
 
 <h1>🔍 Moogle!</h1>
@@ -10,18 +25,29 @@
 
 @if (!string.IsNullOrEmpty(result.Suggestion)) {
     <div class="suggestion">
-        <p>¿Quisite decir <strong><a href="/@result.Suggestion">@result.Suggestion</a></strong>?</p>
+        <p>¿Quisite decir <strong><a href="/@result.Suggestion" >@result.Suggestion</a></strong>?</p>
     </div>
 }
 
-<ul class="results">
+<ul class="results top-row">
+@if(result.Items().Count()==0 && query!="")
+{
+    <li class="item" >
+        <div >
+            <p class="title">Lo Sentimos</p>
+            <p>Al Parecer no hubo resultados para su busqueda</p>
+        </div>
+    </li>
+}
 @foreach (var item in result.Items()) {
+    <a href="/opendoc/@item.Title">
     <li id="list">
         <div class="item">
             <p class="title">@item.Title</p>
             <p>... @item.Snippet ...</p>
         </div>
     </li>
+    </a>
 }
 </ul>
 
@@ -32,4 +58,16 @@
     private void RunQuery() {
         result = Moogle.Query(query);
     }
+
+    protected override void OnInitialized()
+    {
+	if(Query != null)
+	{
+		query=Query;
+		RunQuery();
+	}
+    }
+
+[Parameter]
+public string? Query{get;set;}
 }

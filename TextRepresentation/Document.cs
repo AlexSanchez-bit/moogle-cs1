@@ -9,12 +9,11 @@ public class Document:BaseText
 
 	public Document(string path):base()
 	{
-		var route = path.Split( Path.PathSeparator);
+		var route = path.Split("/");
 		this.path=path;
 		name = route[route.Length-1];	
 	  StreamReader sr = new StreamReader(path);	
 	  var lecture =sr.ReadToEnd();
-		snippet = lecture.Length>100?lecture.Substring(0,100):lecture;
 	  this.FillTerms(lecture);
 	}
 
@@ -35,9 +34,10 @@ public class Document:BaseText
 			}
 		}
 		string snippet ="";
-		for(int i = position;i<processlecture.Length && i<20;i++)
+		for(int i = -20; position+i<processlecture.Length && i<20;i++)
 		{
-		  snippet+=processlecture[i]+" ";
+			if(position+i<=0)continue;
+		  snippet+=processlecture[position+i]+" ";
 		}
 		return snippet;
 	}

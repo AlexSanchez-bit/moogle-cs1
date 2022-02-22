@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using TextRepresentation;
+using System.Diagnostics;
 namespace SearchEngine;
 public class Searcher
 {
@@ -21,7 +22,10 @@ public class Searcher
 	{
 		var directory = Directory.GetFiles(Path.Join("../Content")); 
 		Document[] docs = new Document[directory.Length];
-		int loadedDocs=0;
+		int loadedDocs=0;		
+		var chrono = new Stopwatch();
+		chrono.Start();
+
 		for(int i=0;i<docs.Length;i++)
 		{
 			docs[i] = new Document(directory[i]);
@@ -48,13 +52,15 @@ public class Searcher
 			Console.Write(']');
 			Console.BackgroundColor = ConsoleColor.Black;
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.Write(" "+percentage*100+"%\n");
+			Console.Write(" "+(int)(percentage*100)+"%\n");
 
 		}
 		Console.WriteLine("Documentos Guardados");
 				
 		bagOfWords = new Vocabullary(docs); 
 		Console.WriteLine("TF-IDF Calculados");
+	        chrono.Stop();
+		Console.WriteLine("Cargado en: {0} segundos",chrono.ElapsedMilliseconds/1000);
 		}
 
 
@@ -64,15 +70,23 @@ public class Searcher
 	 var queryVector = bagOfWords.VectorizeDoc(queryObj);
 	 var searchEspace = bagOfWords.GetSearchSpace(queryObj);
 	 var lista = new LinkedList<(string,string,float)>();
+	 var crono = new Stopwatch();
+		crono.Start();
 	 foreach(var doc in searchEspace)
 	 {
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
 		 float distance = (documentVector*queryVector);
+		 if(distance==0)continue;
 			distance/=(float)GetMinDistance(queryObj,doc);
 		 var snippet = "<h1>"+ distance+" </h1> "+doc.Snippet(queryObj.GetTerms()) ;		
 
 		lista.AddLast((doc.Name,snippet,distance));
 	 }
+		crono.Stop();
+	Console.BackgroundColor = ConsoleColor.Green;
+	Console.ForegroundColor = ConsoleColor.Black;
+	Console.WriteLine("busqueda realizada en {0} milisegundos , {1} resultados Obtenidos",crono.ElapsedMilliseconds,lista.Count);
+	Console.WriteLine();
 	return lista;
 	}
 

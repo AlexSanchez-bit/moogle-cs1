@@ -53,7 +53,7 @@ return retstring;
 	    {
 		return word;
 	    }
-	    while(numberPosition<word.Length && char.IsNumber(word[numberPosition]))numberPosition++;
+	    while(numberPosition<word.Length && char.IsNumber(word[numberPosition]))numberPosition++;	    
 	    if(numberPosition>=word.Length)
 	    {
 		return "NUMBER";

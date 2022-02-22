@@ -6,6 +6,7 @@ public class BaseText
 
 	protected BaseText()
 	{
+
 		terms=new Dictionary<string,WordInfo>();
 	}
 	protected BaseText(string text):this()

@@ -1,0 +1,18 @@
+
+@page "/opendoc/{docPath}"
+<PageTitle>@DocPath</PageTitle>
+<h1> @DocPath </h1>
+<p>@text</p>
+@code{
+public string text="nada que poner";
+
+[Parameter]
+public string DocPath{get;set;}
+
+protected override void OnInitialized()
+{
+var realpath = "../Content/"+DocPath;
+ var str = new StreamReader(realpath);
+ text=str.ReadToEnd();
+}
+}
