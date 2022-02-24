@@ -1,0 +1,9 @@
+Objetivos: Estudiar como descomponer en fracciones simples una fracción racional aplicación
+del Teorema Fundamental del Algebra y sus consecuencias.
+La autopreparación para esta clase debe basarse en las notas de clases de las conferencias.
+Para la resolución de los ejercicios es necesario el conocimiento de la definición y
+propiedades básicas de los polinomios en una indeterminada y sus operaciones ya
+estudiadas y aplicarlos a los nuevos conceptos y propiedades. Los conceptos: fracción
+racional, fracción impropia, fracción propia, fracción simple, sus propiedades y de cómo
+descomponer una fracción racional en suma de fracciones simples. También se evaluarán
+las habilidades de demostración de los alumnos.

@@ -64,7 +64,7 @@ public class Searcher
 		}
 
 
-	public IEnumerable<(string,string,float)> Search(string query)
+	public IEnumerable<(string,string,float)> Search(ref string query)
 	{
 	 var queryObj = new Query(query);
 	 var queryVector = bagOfWords.VectorizeDoc(queryObj);
@@ -79,7 +79,6 @@ public class Searcher
 		 distance/=(float)GetMinDistance(queryObj,doc);
 		 if(distance==0)continue;
 		 var snippet = "< "+ distance+" >\n "+doc.Snippet(queryObj.GetTerms()) ;		
-
 		lista.AddLast((doc.Name,snippet,distance));
 	 }
 		crono.Stop();
@@ -87,6 +86,7 @@ public class Searcher
 	Console.ForegroundColor = ConsoleColor.Black;
 	Console.WriteLine("busqueda realizada en {0} milisegundos , {1} resultados Obtenidos",crono.ElapsedMilliseconds,lista.Count);
 	Console.WriteLine();
+		query = bagOfWords.FixQuery(queryObj);
 	return lista;
 	}
 

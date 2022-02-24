@@ -1,0 +1,15 @@
+
+Permite identificar grupos de opiniones similares, o reducir el espacio
+Teorema: Toda fracción racional puede descomponerse como
+suma de un polinomio y una f
+Determina el límite cuando x → 0 por la derecha y por la izquierda a partir de lo observado en el inciso
+anterior. Explica los resultados.
+EC
+9. Sean f n (x) = arctan(nx), g n (x) = (1 + x 2 ) −n
+Calcula los límites f(x) = lim f n (x),
+n→∞
+g(x) = lim g n (x)
+n→∞
+para cada x ∈ R y representa el gráfico de las funciones f y g. ¿Son continuas?
+Representa gráficamente f n y g n utilizando Asistentes Computacionales e investigue el comportamiento
+de los gráficos para n → ∞.

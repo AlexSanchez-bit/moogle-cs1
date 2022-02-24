@@ -37,7 +37,39 @@ public class Vocabullary
 
 	public string FixQuery(Query query)
 	{
-	   
+		if(QueryErrors.Count==0)return"";
+		string retValue="";	   
+		foreach(var term in query.GetTerms())
+		{
+			if(QueryErrors.Contains(term))
+			{
+			   retValue += GetSimilarWord(term);
+			}else
+			{
+				retValue+=query.GetTerm(term).OriginalTerms()[0];	
+			}
+			retValue+=" ";
+		}
+		QueryErrors.Clear();
+		return retValue;
+	}
+
+	private string GetSimilarWord(string word)
+	{
+		int minimal_distance=int.MaxValue;
+		string bestWord="";
+		foreach(var term in corpus.Keys)
+		{
+		 int dist =TextTreatment.TextProcessor.DistanceBetweenWords(word,term);
+		 if(dist<minimal_distance)
+		 {
+			minimal_distance=dist;
+			bestWord=term;
+
+		 }
+		}
+		Console.WriteLine(bestWord+" "+word);
+		return corpus[bestWord].First.Value.GetTerm(bestWord).OriginalTerms()[0];
 	}
 
 	public IEnumerable<Document> GetSearchSpace(Query query)
@@ -47,7 +79,7 @@ public class Vocabullary
 		{		    			
 			if(!corpus.ContainsKey(term))
 			{
-
+				QueryErrors.AddLast(term);
 			}else{				
 			if(IsForbiddenWord(query.GetOperatorWords("!"),term))continue;
 			foreach(var doc in corpus[term])
@@ -101,13 +133,13 @@ public class Vocabullary
 		int index=0;
 		foreach(var term in corpus)
 		{
-	ret_value[index++]=(float)((float)text.GetTermFrequency(term.Key)/(float)text.WordCount())*CalculateIdf(term.Key)+0.0005f;//calculando pesos TF-IDF y agregando 0.0005 para evitar tener muchos 0
+	ret_value[index++]=(float)((float)text.GetTermFrequency(term.Key)/(float)text.WordCount())*CalculateIdf(term.Key);//calculando pesos TF-IDF y agregando 0.0005 para evitar tener muchos 0
 		}
 		return ret_value;
 	}
 
 	private float CalculateIdf(string term)
-	{
+	{		
 		return (float)Math.Log10((float)(corpusSize/corpus[term].Count));
 	}
 

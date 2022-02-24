@@ -6,20 +6,34 @@
 .results
 {
  list-style:none; 
+}
+.result a {
+	text-decoration:none;
+}
+.title{
+	font-size:1.8vw;
+}
  .item
  {
+ margin:18px;
 	border-radius:10px;
-	border:10px BLACK solid;
+	border:0.1px GREY solid;
+	text-decoration:none;
+	font-weight:10px;
+	box-shadow:0px 0px 7px BLACK ,inset 0px 0px 3px BLACK;
  }
 
-}
+ .snippet
+ {
+	fon-size:9vw;
+ }
 
 </style>
 <PageTitle>Moogle!</PageTitle>
 
 <h1>🔍 Moogle!</h1>
 
-<input class="p-1 my-4" @bind="query" placeholder="Introduzca su búsqueda">
+<input class="p-1 my-4" @bind="query"  @onkeyup="RunQuery" placeholder="Introduzca su búsqueda">
 
 <button type="default" class="btn btn-primary" @onclick="RunQuery">🔍 Buscar</button>
 
@@ -28,6 +42,8 @@
         <p>¿Quisite decir <strong><a href="/@result.Suggestion" >@result.Suggestion</a></strong>?</p>
     </div>
 }
+
+
 
 <ul class="results top-row">
 @if(result.Items().Count()==0 && query!="")
@@ -40,14 +56,14 @@
     </li>
 }
 @foreach (var item in result.Items()) {
-    <a href="/opendoc/@item.Title">
     <li id="list">
         <div class="item">
+    <a href="/opendoc/@item.Title">
             <p class="title">@item.Title</p>
-            <p>... @item.Snippet ...</p>
+    </a>
+            <p class="snippet">... @item.Snippet ...</p>
         </div>
     </li>
-    </a>
 }
 </ul>
 
