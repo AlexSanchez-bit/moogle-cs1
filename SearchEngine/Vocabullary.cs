@@ -68,7 +68,6 @@ public class Vocabullary
 
 		 }
 		}
-		Console.WriteLine(bestWord+" "+word);
 		return corpus[bestWord].First.Value.GetTerm(bestWord).OriginalTerms()[0];
 	}
 
