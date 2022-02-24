@@ -9,7 +9,7 @@ public static class TextProcessor
 			 }); 
 	}
 
-	public static string GetStem(string Original)
+	private static string GetStem(string Original)
 	{
 	    return Stemmer.Stemize(Original);
 	}

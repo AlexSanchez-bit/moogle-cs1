@@ -3,7 +3,6 @@ namespace TextTreatment;
 public static class Stemmer {
 
 
-#region DataForPorterAlgoritm
     
     private static char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'á', 'é', 'í', 'ó', 'ú', 'ü' };
 
@@ -41,7 +40,6 @@ public static class Stemmer {
         return  !IsVocal( x );
     }
 
-#endregion
 
     public static string Stemize(string word) {
         int r1, r2, rv;
@@ -56,8 +54,7 @@ public static class Stemmer {
 
 
         word1 = Step3(word1, n - r1, n - r2, n - rv);
-
-        return word1 ; 
+        return word1; 
     }
 
 
@@ -107,7 +104,7 @@ public static class Stemmer {
     }
 
 
-    // ? Step 0: Attached pronoun
+    //paso 0 sacar el pronombre
     private static string Step0(string word, int r1, int r2, int rv) {
         int n = word.Length;
         string newWord = "";

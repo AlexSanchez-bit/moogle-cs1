@@ -5,7 +5,6 @@ namespace MoogleEngine;
 public static class Moogle
 {
     public static SearchResult Query(string query) {
-        // Modifique este método para responder a la búsqueda	
 	var searcher = Searcher.GetSingleInstance(); 
 	var results = searcher.Search(query);
 	SearchItem[] items = new SearchItem[results.Count()];

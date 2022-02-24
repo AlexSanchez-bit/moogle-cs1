@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//creo la instancia singleton del Motor de Busqueda (para cargar los documentos una sola vez)
 Searcher.GetSingleInstance();
 
 // Add services to the container.

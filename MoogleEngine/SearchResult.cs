@@ -11,31 +11,32 @@ public class SearchResult
         }
         this.items = items;
         this.Suggestion = suggestion;
-//	if(items.Length>1){
-//	QuickSort(0,items.Length);
-//	}
     }
 
 
 
-    private void QuickSort(int start,int end){
-	int r=end-1,l=start;
-	int pivot = (start+end)/2;
-	if(l<r){
-		while(l<r){
-			while(r > start && items[r].Score>=items[pivot].Score )r--;
-			while(l< end && items[l].Score<=items[pivot].Score )l++;
+    private void QuickSort(SearchItem[] items ,int start,int end){
+	    if(start>=end)return;	    
+	    float piv = items[start].Score;
+	    int pos = Particiona(items,start,end,piv);
+	    QuickSort(items,start,pos);
+	    QuickSort(items,pos+1,end);
+    }
 
-			if(l<r){
-			var aux = items[r];
-			items[r]= items[l];
-			items[l]= aux;
-			}
-		}
-
-		QuickSort(start,pivot);
-		QuickSort(pivot,end);
+    private int Particiona(SearchItem[] items,int start,int end,float pivot)
+    {
+	int i=start;
+	int j=end-1;
+	while(true)
+	{
+		while(items[i].Score > pivot)i++;
+		while(items[j].Score < pivot)j--;
+		if(i>=j)return j;
+		var temp = items[i];
+		items[i]=items[j];
+		items[j]=temp;
 	}
+
     }
 
     public SearchResult() : this(new SearchItem[0]) {
@@ -45,6 +46,7 @@ public class SearchResult
     public string Suggestion { get; private set; }
 
     public IEnumerable<SearchItem> Items() {
+	QuickSort(items,0,items.Length);
         return this.items;
     }
 

@@ -117,9 +117,10 @@ public class Query:BaseText
 
 	private string GetWord(string text,int position,Direction direction)
 	{
+		if(position < 0 || position > text.Length || text.Length<2)return "";
+
 		int i=position;
 		string retVal="";
-		Console.WriteLine(text[i]);
 		if(direction==Direction.Forward)
 		{
 			if(text[i]==' ')i++;
@@ -136,13 +137,14 @@ public class Query:BaseText
 			}		
 		retVal=Reverse(retVal);	
 		}
+		Console.WriteLine(retVal);
 		return retVal;
 	}
 
 	private string Reverse(string word)
 	{
 		string retval="";
-		for(int i =word.Length-1 ;i>0;i--)
+		for(int i =word.Length-1 ;i>=0;i--)
 		{
 		  retval+=word[i];
 		}

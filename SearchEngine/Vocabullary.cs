@@ -3,9 +3,10 @@ using AlgeTool;
 namespace SearchEngine;
 public class Vocabullary
 {
-	private Dictionary<string ,LinkedList<Document>> corpus;
-	private Dictionary<string,Vector> vectorizedDocs;
-	private int corpusSize;
+	private Dictionary<string ,LinkedList<Document>> corpus; //corpus de documentos
+	private Dictionary<string,Vector> vectorizedDocs;//vectores de cada documento indexados por su nombre
+	private int corpusSize;//tamanno del corpus(cantidad de documentos)
+	private LinkedList<string> QueryErrors;//palabras del query a arreglar
 
 
 	public Vocabullary(Document[] documents)
@@ -13,6 +14,7 @@ public class Vocabullary
 		corpus=new Dictionary<string, LinkedList<Document>>();
 		vectorizedDocs = new Dictionary<string, Vector>();
 		corpusSize = documents.Length;
+		QueryErrors = new LinkedList<string>();
 
 		foreach(var doc in documents)
 		{
@@ -33,12 +35,20 @@ public class Vocabullary
 
 	}
 
+	public string FixQuery(Query query)
+	{
+	   
+	}
+
 	public IEnumerable<Document> GetSearchSpace(Query query)
 	{
 		LinkedList<Document> docList = new LinkedList<Document>();
 		foreach(var term in query.GetTerms())
 		{		    			
-			if(!corpus.ContainsKey(term))continue;
+			if(!corpus.ContainsKey(term))
+			{
+
+			}else{				
 			if(IsForbiddenWord(query.GetOperatorWords("!"),term))continue;
 			foreach(var doc in corpus[term])
 			{
@@ -46,6 +56,7 @@ public class Vocabullary
 			if(ContainsWords(query.GetOperatorWords("!"),doc))continue;
 				if(!SatisfyOperatosHas(query.GetOperatorWords("^"),doc))continue;
 				docList.AddLast(doc);
+			}
 			}
 		}
 
@@ -90,7 +101,7 @@ public class Vocabullary
 		int index=0;
 		foreach(var term in corpus)
 		{
-			ret_value[index++]=((float)(text.GetTermFrequency(term.Key))*CalculateIdf(term.Key));
+	ret_value[index++]=(float)((float)text.GetTermFrequency(term.Key)/(float)text.WordCount())*CalculateIdf(term.Key)+0.0005f;//calculando pesos TF-IDF y agregando 0.0005 para evitar tener muchos 0
 		}
 		return ret_value;
 	}
