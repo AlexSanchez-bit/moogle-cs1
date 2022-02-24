@@ -150,7 +150,6 @@ public class Query:BaseText
 			}		
 		retVal=Reverse(retVal);	
 		}
-		Console.WriteLine(retVal);
 		return retVal;
 	}
 

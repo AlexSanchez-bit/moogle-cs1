@@ -4,7 +4,7 @@ public static class Stemmer {
 
 
     
-    private static char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'á', 'é', 'í', 'ó', 'ú', 'ü' };
+    private static char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
 
     private static string[] step0 = { "me", "se", "sela", "selo", "selas", "selos", "la", "le", "lo", "las", "les", "los", "nos" }; 
     private static string[] stepAfter0 = { "iéndo", "ándo", "ár", "ér", "ír", "ando", "iendo", "ar", "er", "ir", "yendo" };
