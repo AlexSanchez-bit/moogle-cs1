@@ -1,25 +1,29 @@
 ﻿using TextTreatment;
 namespace TextRepresentation;
 public class BaseText 
+/***
+ * Clase Base que abstrae la logica de lectura de texto y su almacenamiento
+ */
 {
-	private Dictionary<string,WordInfo> terms;
+	private Dictionary<string,WordInfo> terms;//Diccionario que tendra para cada termino , sus metadatos
 
-	protected BaseText()
+	protected BaseText() //constructor basico que inicializa el Diccionario
 	{
 
 		terms=new Dictionary<string,WordInfo>();
 	}
-	protected BaseText(string text):this()
+	protected BaseText(string text):this()//constructor que recive el texto , llama al constructor
+					//basico y llena los campos de la clase
 	{
 		FillTerms(text);
 	}
 
-	public int WordCount()
+	public int WordCount()//retorna la cantidad de palabras asociadas al texto procesado
 	{
-		return this.terms.Count()>0?terms.Count():1;
+		return this.terms.Count();
 	}
 
-	protected void FillTerms(string text)
+	protected void FillTerms(string text)//Funcion para rellenar los terminos en el documento
 	{
 		var Tokens = GetTokens(text);
                  int index =0;
@@ -38,12 +42,12 @@ public class BaseText
 	}
 
 
-	protected string[] GetTokens(string text)
+	protected string[] GetTokens(string text)//retorna los tokens del texto (un array con sus palabras)
 	{
 	return ReduceText(text).Split(" ");
 	}
 
-	private string ReduceText(string text)
+	private string ReduceText(string text)//elimina caracteres innecesarios
 	{
 	  return text
 		  .Replace('\n',' ')
@@ -54,12 +58,14 @@ public class BaseText
 		  ;
 	}
 
-	public IEnumerable<string> GetTerms()
+	public IEnumerable<string> GetTerms()//retorna los terminos almacenados como llaves del diccionario
 	{
 	  return terms.Keys;
 	}
 
-	public WordInfo GetTerm(string term)
+	public WordInfo GetTerm(string term)//permite obtenet los metadatos de un termino especifico
+		                            //o null si no se encuentra
+
 	{
 		if(terms.ContainsKey(term))
 		{
@@ -68,13 +74,16 @@ public class BaseText
 		return null;
 	}
 
-	public virtual  int GetTermFrequency(string term)
+	public virtual  int GetTermFrequency(string term)//metodo para obtener la frecuencia de 
+							//cada termino es virtual para que las clases 
+							//hijas puedan modificar el metodo
 	{
 		return GetFrequency(term);
 	}
 	 
 
-	protected int GetFrequency(string term)
+	protected int GetFrequency(string term)//metodo para obtener la frecuencia de un termino 
+						//de manera interna 
 	{
 
 		if(terms.ContainsKey(term))

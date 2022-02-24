@@ -1,19 +1,21 @@
 ﻿namespace TextRepresentation;
 public class WordInfo
+//clase para representar a un termino y sus metadatos
 {
-    private LinkedList<int> indexedPositions;
-	private LinkedList<string> indexedWords;
+    private LinkedList<int> indexedPositions;//lista de posiciones donde aparece el termino
+	private LinkedList<string> indexedWords;//lista de las palabras originales del termino
 
 
 
-    public WordInfo(string originalWord ,int fila)
+    public WordInfo(string originalWord ,int fila)//constrictor , inicializa las listas
+	    					//y annade un dato a ellas
     {
 	indexedWords = new LinkedList<string>();
 	indexedPositions = new LinkedList<int>();
 	AddPos(originalWord,fila);
     }
 
-    public int[] GetPositions()
+    public int[] GetPositions()//devuelve las posiciones del termino
     {
 	    int[] positions=new int[indexedPositions.Count];
 	    int index=0;
@@ -24,7 +26,7 @@ public class WordInfo
 	    return positions;
     }
 
-    public string[] OriginalTerms()
+    public string[] OriginalTerms()//devuelve las palabras originales
     {
 	    string[] terms=new string[indexedWords.Count];
 	    int index=0;
@@ -35,7 +37,8 @@ public class WordInfo
 	    return terms;
     }
 
-    public void AddPos(string originalWord,int position)
+    public void AddPos(string originalWord,int position)//agrega una posicion del termino 
+	    						//y su palabra original
     {
 	indexedPositions.AddLast(position);
 	if(!indexedWords.Contains(originalWord))
@@ -44,7 +47,7 @@ public class WordInfo
 	}
     }
 
-    public int GetFrequency()
+    public int GetFrequency()//devuelve la frecuencia del termino representado
     {
 	return indexedPositions.Count;
     }

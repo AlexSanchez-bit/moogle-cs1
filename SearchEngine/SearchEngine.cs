@@ -2,13 +2,16 @@
 using TextRepresentation;
 using System.Diagnostics;
 namespace SearchEngine;
+//clase que representa el motor de busqueda y sus funcionalidades
 public class Searcher
 {
 
-	private static Searcher singleInstance =null;
-	Vocabullary bagOfWords;
+	private static Searcher singleInstance =null;//instancia estatica para el singleton
+	Vocabullary bagOfWords;//instancia de vocabulario para procesar las busquedas
 
-	public static Searcher GetSingleInstance()
+	public static Searcher GetSingleInstance()//funcion para obtener una instancia de la clase
+						//si ya esta creada , te devuelve esa instancia 
+						//caso contrario crea una , la almacena y la devuelve
 	{
 		if(singleInstance==null)
 		{
@@ -18,7 +21,8 @@ public class Searcher
 		return singleInstance;
 	}
 
-	private Searcher()
+	private Searcher()//crea el Objeto , lee el directorio , crea las instancias de Document y 
+			//Vocabullary 
 	{
 		var directory = Directory.GetFiles(Path.Join("../Content")); 
 		Document[] docs = new Document[directory.Length];
@@ -26,7 +30,7 @@ public class Searcher
 		var chrono = new Stopwatch();
 		chrono.Start();
 
-		for(int i=0;i<docs.Length;i++)
+		for(int i=0;i<docs.Length;i++)//lee los directorios , y hace una pequena animacion 
 		{
 			docs[i] = new Document(directory[i]);
 			loadedDocs++;
@@ -64,7 +68,9 @@ public class Searcher
 		}
 
 
-	public IEnumerable<(string,string,float)> Search(ref string query)
+	public IEnumerable<(string,string,float)> Search(ref string query)//Realiza la busqueda y 
+							//en caso de haber errores en la consulta
+							//los repara
 	{
 	 var queryObj = new Query(query);
 	 var queryVector = bagOfWords.VectorizeDoc(queryObj);
@@ -90,7 +96,8 @@ public class Searcher
 	return lista;
 	}
 
-	private int GetMinDistance(Query queryObj,Document doc)
+	private int GetMinDistance(Query queryObj,Document doc)//obtiene las distancias minimas de 
+				//las palabras afectadas por el operador ~ en un documento
 	{		
 		var words = queryObj.GetOperatorWords("~");		
 		int MinDistance = 1;		

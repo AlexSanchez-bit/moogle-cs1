@@ -2,24 +2,24 @@
 public static class TextProcessor
 {
 
-	public static IEnumerable<string> ProcessWords(string[] words)
+	public static IEnumerable<string> ProcessWords(string[] words)//devuelve un iterable de las palabras procesadas 
 	{
 	 return words.Select(elem=>{
 		return ProcessWord(elem);
 			 }); 
 	}
 
-	private static string GetStem(string Original)
+	private static string GetStem(string Original)//obtiene el Stem o raiz comun de una palabra
 	{
 	    return Stemmer.Stemize(Original);
 	}
 
-	public static string ProcessWord(string word)
+	public static string ProcessWord(string word)//dada una palabra cualquiera devuelve la palabra procesada
 	{
 		return (RemoveSigns(ProcessNumbers(Normalize(word))));
 	}	
 
-	public static int DistanceBetweenWords(string word1,string word2)
+	public static int DistanceBetweenWords(string word1,string word2)//usando el algoritmo de levensgtein devuelve la medida de igualdad entre dos palabras
 	{
 		int n= word1.Length;
 		int m= word2.Length;
@@ -57,7 +57,7 @@ public static class TextProcessor
 
 
 
-	private static string Normalize(string original)
+	private static string Normalize(string original)//lleva la palabra a minusculas y cambia las tildes y caracteres especificos del espannol
 	{
 		return original
 			.ToLower()
@@ -70,7 +70,7 @@ public static class TextProcessor
 
 	}
 
-	private static string RemoveSigns(string wrd)
+	private static string RemoveSigns(string wrd)//elimina los simbolos raros y todo lo que no sea una letra
 	{
 		string retstring ="";
 		foreach(char a in wrd)
@@ -83,7 +83,7 @@ public static class TextProcessor
 return retstring;
 	}
 
-	private static string ProcessNumbers(string word)
+	private static string ProcessNumbers(string word)//procesa los numeros codigos fechas etc
 	{		
             int numberPosition=0;
 	    if(word.Length==0)

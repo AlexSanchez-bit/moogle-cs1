@@ -2,17 +2,23 @@
 namespace TextRepresentation;
 enum Direction{Forward,Backward}
 public class Query:BaseText
+		   //hereda de BaseText 
+		   //Query implementa la logica asociada a la consulta del usuario
 {
-	Dictionary<string,LinkedList<string>> operatorList;
-	private int highestFrequency;
-	public Query(string text):base()
+	Dictionary<string,LinkedList<string>> operatorList;//diccionario para asociar a cada operador
+							//con una lista de las palabras a las que afecta
+	private int highestFrequency;//la frecuencia mas alta de los elementos del query
+
+	public Query(string text):base()//Constructor de la clase , procesa los operadores y 
+				  //luego el texto de la consulta , utilizando los metodos heredados de BaseText
 	{
 		text=RemoveOperators(text.ToLower());
 		FillTerms(text);	
 		highestFrequency=GetHighestFrequency();
 	}
 
-    public IEnumerable<string> GetOperatorList()
+    public IEnumerable<string> GetOperatorList()//obtiene los operadores del query almacenados en 
+	    					//las llaves del diccionario
 	{
 		return operatorList.Keys;		
 	}
@@ -23,7 +29,9 @@ public class Query:BaseText
 		return new string[0];
 	}
 
-	public override int GetTermFrequency(string term)
+	public override int GetTermFrequency(string term)//sobreescribe el metodo definido en BaseText 
+							//para obtener la frecuencia y variar 
+							//la frecuencia en funcion del operador *
 	{
 		var original = this.GetFrequency(term);
 	   foreach(var aux in operatorList.Where(elem=>elem.Key[0]=='*'))
@@ -38,7 +46,7 @@ public class Query:BaseText
 	}
 
 
-	private int GetHighestFrequency()
+	private int GetHighestFrequency()//calcula la mayor de las frecuencias  de los documentos
 	{
 		int maximun=0;
 		foreach(var aux in this.GetTerms())
@@ -49,7 +57,9 @@ public class Query:BaseText
 		return maximun;
 	}
 
-	private string RemoveOperators(string text)
+	private string RemoveOperators(string text)//elimina los operadores de la consulta original	
+						//y los almacena en el diccionario con sus 
+						//respectivas listas de palabras
 	{
 		operatorList= new Dictionary<string,LinkedList<string>>();
 	  string retValue="";
@@ -70,7 +80,8 @@ public class Query:BaseText
 	  return retValue;
 	}
 
-	private void ProcessOperator(string text,char op,ref int position)
+	private void ProcessOperator(string text,char op,ref int position)//procesa cada operador 
+									//y guarda sus palabras asociadas
 	{
 		string toSaveWord ="";
 			switch(op)
@@ -105,7 +116,8 @@ public class Query:BaseText
 			}		
 	}
 
-	private void SaveOperatorWord(string Operator,string word)
+	private void SaveOperatorWord(string Operator,string word)//Guarda el operador o 
+								//agrega una palabra a su lista 
 	{
 		if(word==null || word=="")return;
 	   if(!operatorList.ContainsKey(Operator))
@@ -115,7 +127,8 @@ public class Query:BaseText
 	   operatorList[Operator].AddLast(word);
 	}
 
-	private string GetWord(string text,int position,Direction direction)
+	private string GetWord(string text,int position,Direction direction)//obtiene la palabra en 
+						//funcion de la posicion del operador en la consulta
 	{
 		if(position < 0 || position > text.Length || text.Length<2)return "";
 
@@ -141,7 +154,7 @@ public class Query:BaseText
 		return retVal;
 	}
 
-	private string Reverse(string word)
+	private string Reverse(string word)//revierte un string
 	{
 		string retval="";
 		for(int i =word.Length-1 ;i>=0;i--)
@@ -151,7 +164,7 @@ public class Query:BaseText
 		return retval;
 	}
 
-    private bool IsOperator(char op)
+    private bool IsOperator(char op)//retorna true si el caracter es un operador false en caso contrario
     {
 	return op=='!' || op=='^' || op=='~' || op=='*';
     }
