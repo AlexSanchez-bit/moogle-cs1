@@ -91,27 +91,21 @@ public class Searcher
 	}
 
 	private int GetMinDistance(Query queryObj,Document doc)
-	{
+	{		
 		var words = queryObj.GetOperatorWords("~");		
-		int MinDistance = int.MaxValue;		
-		bool huboCambio=false;
+		int MinDistance = 1;		
 		string ant="";
 		foreach(var aux in words)
 		{
 			if(ant=="")ant=aux;
 			else
 			{
-				int dist = doc.GetMinDistance(aux,ant);
-				ant="";				
-				if(dist>0 && dist<MinDistance)
-				{
-					MinDistance=dist;
-					huboCambio=true;
-				}
+				 int dist = doc.GetMinDistance(aux,ant);
+				 MinDistance*= dist>0?dist:1;
 			}
 			
 		}
-	return huboCambio?MinDistance:1;
+	return MinDistance;
 	}
 	
 
