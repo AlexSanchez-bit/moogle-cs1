@@ -229,10 +229,11 @@ y mantener un orden en el proyecto
 ![](ejemplocarga.png)
 
 
-#Fuentes que utilicé
+# Fuentes que utilicé
 
  - ##### Wikipedia
  - ##### StackOverflow
  - ##### Snowball.com
  - ##### Github
- - ##### ebook-mbo-tecnicas-avanzadas-recuperacion-informacion1 
+ - ##### Procesamiento de Texto y Modelo VectorialFelipe Bravo Márquez
+- ##### Técnicas avanzadas derecuperación de informaciónProcesos, técnicas y métodosManuel Blázquez Ochando
