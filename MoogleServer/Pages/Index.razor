@@ -82,7 +82,7 @@ height:200%;
     }
 
     private void FixQuery(){
-	query=result.Suggestion;
+	query=result.Suggestion.Substring(0,result.Suggestion.Length-1);
 	RunQuery();
     }
 
