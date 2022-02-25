@@ -16,7 +16,7 @@ public static class TextProcessor
 
 	public static string ProcessWord(string word)//dada una palabra cualquiera devuelve la palabra procesada
 	{
-		return (RemoveSigns(ProcessNumbers(Normalize(word))));
+		return GetStem(RemoveSigns(ProcessNumbers(Normalize(word))));
 	}	
 
 	public static int DistanceBetweenWords(string word1,string word2)//usando el algoritmo de levensgtein devuelve la medida de igualdad entre dos palabras

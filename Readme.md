@@ -4,50 +4,45 @@
 
 > Proyecto de Programación I. Facultad de Matemática y Computación. Universidad de La Habana. Curso 2021.
 
-Moogle es un buscador de Documentos , desarrollado en el lenguaje de programacion c# , utilizando lo aprendido en el curso de programacion de la carrera Ciencias de la Computación 2021
+Moogle es un buscador de Documentos , desarrollado en el lenguaje de programación C# , utilizando lo aprendido en el curso de programacion de la carrera Ciencias de la Computación curso 2021
 
 ## Como se estructura el Proyecto?
 - `MoogleServer` es un servidor web que renderiza la interfaz gráfica y sirve los resultados.
-- `MoogleEngine` es una biblioteca de clases donde esta la logica asociada a la busqueda
-- `TextRepresentation` es una libreria de clases donde se encuentra la logica asociada al almacenamiento del texto 
-- `TextTretment` como su nombre indica esta libreria de clases contiene la logica asociada al tratamiento del texto
-- `SearchEngine` libreria de clases asociada a procesar las busquedas 
+- `MoogleEngine` es una biblioteca de clases donde está la lógica asociada a la búsqueda
+- `TextRepresentation` es una libreria de clases donde se encuentra la lógica asociada al almacenamiento del texto 
+- `TextTreatment` como su nombre indica esta libreria de clases contiene la lógica asociada al tratamiento del texto
+- `SearchEngine` librería de clases asociada a procesar las busquedas 
 
 
  ## Sobre la búsqueda
-La busqueda se realiza introduciendo una frase o palabra a buscar en el campo de texto de la pagina principal de moogle .Para realizar las busquedas he utilizado `el modelo vectorial` de recuperacion de la informacion el cual consiste en crear un espacio vectorial donde cada dimension corresponde a un termino del `corpus` textual , midiendo la relevancia de cada `termino` en dicho corpus , con esto ya creado se puede trarar cada documento como un vector n-dimensional , un proceso parecido se le aplica a la busqueda , para luego , aplicando una medida de similitud entre estos vectores , encontrar aquellos documentos que son relevantes respecto a la busqueda.
- - En general un usuario puede buscar no solo una palabra sino una frase cualquiera
+La búsqueda se realiza introduciendo una frase o palabra en el campo de texto de la página principal de moogle. Para realizarlos he utilizado `el modelo vectorial` de recuperación de la informaciṕn, el cual consiste en crear un espacio vectorial donde a cada dimensión le corresponde un término del `corpus` textual , midiendo la relevancia de cada `término` en dicho corpus; con esto ya creado se puede trarar cada documento como un vector n-dimensional , un proceso parecido se le aplica a la búsqueda , para luego , aplicando una medida de similitud entre estos vectores , encontrar aquellos documentos que son relevantes respecto a la búsqueda.
+ - En general un usuario puede buscar no solo una palabra, sino una frase cualquiera
  - Los Documentos devueltos no tiene que tener todas las palabras , pero su `score` disminuye mientras menos palabras tenga
- - Si dos documentos tienen el mismo score pero uno tiene una palabra mas 'importante' que otra (mas rara) , este es devuelto con un score mayor
+ - Si dos documentos tienen la misma cantidad de palabras , pero uno tiene una palabra más 'importante' que otra (más rara) , este es devuelto con un score mayor
  - Las palabras demasiado comunes como las preposiciones conjunciones etc son ignoradas y no aportan relevancia al score del documento
 
 
  ### Operadores de búsqueda
 Para Obtener mejores resultados , moogle cuenta con una serie de operadores que facilitan la obtencion de informacion
 `!` filtra los documentos para obtener solo aquellos que **no tengan la palabra que sigue** al operador
-`^` permite obtener solo documentos que cumplan con la condicion de **tener la palabra seguida por el operador**
-`~` aumenta el `score` o relevancia de un documento , mientras **mas cercanas** esten las palabras a sus laterales dentro del documento
-`*` son acumulativos y aumentan la relevancia de un termino en especifico 
+`^` permite obtener solo documentos que cumplan con la condición de **tener la palabra seguida por el operador**
+`~` aumenta el `score` o relevancia de un documento , mientras **más cercanas** esten las palabras a sus laterales dentro del documento
+`*` son acumulativos y aumentan la relevancia de un término en específico 
 
-###Evaluacion del Score
-Para evaluar el `Score` utilizo el **TF-IDF** apoyado por el **modelo vectorial** de recuperacion de la informacion
-Sabiendo cuantas veces se repite una palabra dentro del documento ( Frequency Term o TF) puedo saber su relevancia dentro de ese documento , luego 
-teniendo calculadas las frecuencias de termino (TF) en todos los terminos de los documentos que forman el corpus textual calculo el IDF o frecuencia inversa
-para determinar la relevancia de cada termino en el corpus general , con todo esto armo un vocabulario que contiene todas las palabras de los documentos
-y convierto estos a vectores de R*n* donde n es la cantidad de terminos entre los documentos , Haciendo este mismo proceso a la Query o consulta del usuario
-obtengo 2 vectores de Rn (el de Query y el de el Documento i-esimo) a los cuales se les puede hallar la distancia coseno que me permite determinar el Coseno del Angulo entre dos Vectores del mismo espacio , mientras mayor es el valor obtenido de la distancia coseno , menor es el angulo entre dichos vectores en su espacio 
-,por tanto estan mas cerca y el Query es mas relevante a la busqueda
+###Evaluación del Score
+Para evaluar el `Score` utilizo el **TF-IDF** apoyado por el **modelo vectorial** de recuperación de la información
+Sabiendo cuantas veces se repite una palabra dentro del documento ( Term Frequency o TF) puedo saber su relevancia dentro de ese documento , luego teniendo calculadas las frecuencias de termino (TF) en todos los términos de los documentos que forman el corpus textual calculo el IDF o frecuencia inversa para determinar la relevancia de cada termino en el corpus general , con todo esto armo un vocabulario que contiene todas las palabras de los documentos y convierto estos a vectores de R*n* donde n es la cantidad de terminos entre los documentos. Haciendo este mismo proceso a la Query o consulta del usuario obtengo 2 vectores de Rn (el de Query y el de el Documento i-esimo) a los cuales se les puede hallar la distancia coseno que me permite determinar el Coseno del Angulo entre dos Vectores del mismo espacio; mientras mayor es el valor obtenido de la distancia coseno , menor es el angulo entre dichos vectores en su espacio,por tanto están más cerca y el Query es más relevante a la búsqueda
 
 
 
-# Ingenieria de Software
-Para mantener mi proyecto lo mas encapsulado y facil de mantener posible , abstraje la logica de cada componente en distintas clases y distintos `classlibrary`
-para mantener un orden en el proyecto
+# Ingeniería de Software
+Para mantener mi proyecto lo más encapsulado y fácil de mantener posible, abstraje la lógica de cada componente en distintas clases y distintos `classlibrary`
+y mantener un orden en el proyecto
  ##ClassLibrarys:
- - `Algetool` : Contiene la logica asociada a los calculos algbraicos necesarios como calcular la norma de un vector Hallar la distancia coseno entre dos vectores
- - `TextRepresentation`: Contiene la logica asociada a la representacion de los textos y su almacenamieto correcto para ser utilizados en el buscador
- - `TextTreatment`: abstrae de la logica de procesar y tratar los textos 
- - `SearchEngine`: Contiene la logica necesara para hacer la busqueda y depende de el resto de class librarys
+ - `Algetool` : Contiene la lógica asociada a los cálculos algbraicos necesarios como calcular la norma de un vector y Hallar la distancia coseno entre dos vectores
+ - `TextRepresentation`: Contiene la lógica asociada a la representación de los textos y su almacenamieto correcto para ser utilizados en el buscador
+ - `TextTreatment`: abstrae de la lógica de procesar y tratar los textos 
+ - `SearchEngine`: Contiene la lógica necesaria para hacer la búsqueda y une el resto de class librarys
 
 # Clases creadas por mi:
 ## Cada clase se usa para abstraer de una logica distinta que al final se unen para hacer funcionar el proyecto
@@ -56,13 +51,13 @@ para mantener un orden en el proyecto
     ```cs
         public class WordInfo
         {        
-           public WordInfo(string originalWord ,int fila)//constrictor , inicializa las listas y annade un dato a ellas  
+           public WordInfo(string originalWord ,int fila)//constructor , inicializa las listas y añade un dato a ellas  
 
            public int[] GetPositions()//devuelve las posiciones del termino
     
             public string[] OriginalTerms()//devuelve las palabras originales    
 
-    		public void AddPos(string originalWord,int position)//agrega una posicion del termino y su palabra original
+    		public void AddPos(string originalWord,int position)//agrega una posicion del término y su palabra original
 
       		public int GetFrequency()//devuelve la frecuencia del termino representado    
      	}
@@ -72,7 +67,7 @@ para mantener un orden en el proyecto
     - **abstrae la logica de leer y procesar texto** 
      ```cs
         public class BaseText 
-        {	
+		{	
 	    protected BaseText() //constructor basico , inicializa las propiedades
 
 	    protected BaseText(string text):this()//constructor que recibe el texto , llama al constructor basico y llena los campos de la clase	
@@ -214,7 +209,7 @@ para mantener un orden en el proyecto
 # Flujo de Funcionamiento
 #### Al iniciar el servidor , este crea una instancia de Searcher el cual carga los Documentos  y los procesa individualmente para obtener los datos relevantes sobre ellos , tales como su nombre, ruta y frecuencia de sus terminos , estos luego son utilizados para crear un vocabulario o `"bag of words"` que contiene todos los terminos del corpus textual (los documentos)  , con esto hecho se vectorizan los documentos calculando para cada termino su frecuencia inversa o IDF y se utiliza esta metrica para normalizar la frecuencia del termino en el documento (TF) y asi definir la relevancia de cada termino en el documento , estos vectores son almacenados para utilizarse en las busquedas .
 
-#### Cuando un usuario realiza una consulta en la interfaz grafica esta pasa al servidor donde se Procesan los datos introducidos por el usuario tales como separar los operadores procesar los terminos y calcular a cada uno de ellos sus frecuencias utilizando el vocabulario , una vez hecho esto se procede a reducir el espacio de busqueda seleccionando los documentos que cumplan con los operadores `*` y `!` luego utilizando los vectores de los documentos previamente calculados y el de la consulta se procede a hacer el calculo de la relevancia o score de cada documento respecto al query , esto se cubre utilizndo la distancia coseno entre vectores la cual es una medida de similitud entre vectores , este score se afecta en dependencia de los operadores `*` y `~` , luego de calcular todos los scores , se organiza la lista de documentos segun su score de mayor a menor y se devuelven al usuario , si hubo alguna palabra que no se pudo encontrar utilizando el algoritmo de Levengstein trato de encontrar alguna palabra que arregle la consulta
+#### Cuando un usuario realiza una consulta en la interfaz gráfica esta pasa al servidor donde se procesan los datos introducidos por el usuario tales como: separar los operadores procesar los terminos y calcular a cada uno de ellos sus frecuencias utilizando el vocabulario. Tras desarrollarlo se procede a reducir el espacio de búsqueda seleccionando los documentos que cumplan con los operadores `*` y `!` luego utilizando los vectores de los documentos previamente calculados y el de la consulta se procede a hacer el cálculo de la relevancia o score de cada documento respecto al query , esto se cubre utilizndo la distancia coseno entre vectores la cual es una medida de similitud entre vectores , este score se afecta en dependencia de los operadores `*` y `~` , luego de calcular todos los scores , se organiza la lista de documentos segun su score de mayor a menor y se devuelven al usuario , si hubo alguna palabra que no se pudo encontrar utilizando el algoritmo de Levengstein trato de encontrar alguna palabra que arregle la consulta
 
 
 
@@ -232,3 +227,12 @@ para mantener un orden en el proyecto
 
 ## Pantalla de carga al iniciar el servidor
 ![](ejemplocarga.png)
+
+
+#Fuentes que utilicé
+
+ - ##### Wikipedia
+ - ##### StackOverflow
+ - ##### Snowball.com
+ - ##### Github
+ - ##### ebook-mbo-tecnicas-avanzadas-recuperacion-informacion1 
