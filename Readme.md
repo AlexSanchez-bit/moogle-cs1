@@ -29,7 +29,7 @@ Para Obtener mejores resultados , moogle cuenta con una serie de operadores que 
 `~` aumenta el `score` o relevancia de un documento , mientras **más cercanas** esten las palabras a sus laterales dentro del documento
 `*` son acumulativos y aumentan la relevancia de un término en específico 
 
-###Evaluación del Score
+# Evaluación del Score
 Para evaluar el `Score` utilizo el **TF-IDF** apoyado por el **modelo vectorial** de recuperación de la información
 Sabiendo cuantas veces se repite una palabra dentro del documento ( Term Frequency o TF) puedo saber su relevancia dentro de ese documento , luego teniendo calculadas las frecuencias de termino (TF) en todos los términos de los documentos que forman el corpus textual calculo el IDF o frecuencia inversa para determinar la relevancia de cada termino en el corpus general , con todo esto armo un vocabulario que contiene todas las palabras de los documentos y convierto estos a vectores de R*n* donde n es la cantidad de terminos entre los documentos. Haciendo este mismo proceso a la Query o consulta del usuario obtengo 2 vectores de Rn (el de Query y el de el Documento i-esimo) a los cuales se les puede hallar la distancia coseno que me permite determinar el Coseno del Angulo entre dos Vectores del mismo espacio; mientras mayor es el valor obtenido de la distancia coseno , menor es el angulo entre dichos vectores en su espacio,por tanto están más cerca y el Query es más relevante a la búsqueda
 
@@ -38,7 +38,7 @@ Sabiendo cuantas veces se repite una palabra dentro del documento ( Term Frequen
 # Ingeniería de Software
 Para mantener mi proyecto lo más encapsulado y fácil de mantener posible, abstraje la lógica de cada componente en distintas clases y distintos `classlibrary`
 y mantener un orden en el proyecto
- ##ClassLibrarys:
+ ## ClassLibrarys:
  - `Algetool` : Contiene la lógica asociada a los cálculos algbraicos necesarios como calcular la norma de un vector y Hallar la distancia coseno entre dos vectores
  - `TextRepresentation`: Contiene la lógica asociada a la representación de los textos y su almacenamieto correcto para ser utilizados en el buscador
  - `TextTreatment`: abstrae de la lógica de procesar y tratar los textos 
