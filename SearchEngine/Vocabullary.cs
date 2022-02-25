@@ -42,6 +42,7 @@ public class Vocabullary
 		string retValue="";	   
 		foreach(var term in query.GetTerms())
 		{
+			retValue+=" ";
 			if(QueryErrors.Contains(term))
 			{
 			   retValue += GetSimilarWord(term);
@@ -49,7 +50,6 @@ public class Vocabullary
 			{
 				retValue+=query.GetTerm(term).OriginalTerms()[0];	
 			}
-			retValue+=" ";
 		}
 		QueryErrors.Clear();
 		return retValue;
@@ -149,7 +149,7 @@ public class Vocabullary
 
 	private float CalculateIdf(string term)//calcula el IDF de un termino en el corpus 
 	{		
-		return (float)Math.Log10((float)(corpusSize/corpus[term].Count));
+		return (float)Math.Log10((float)(corpusSize/corpus[term].Count)+0.0005f);
 	}
 
 }

@@ -28,6 +28,10 @@ public class Searcher
 		Document[] docs = new Document[directory.Length];
 		int loadedDocs=0;		
 		var chrono = new Stopwatch();
+
+
+
+
 		chrono.Start();
 
 		for(int i=0;i<docs.Length;i++)//lee los directorios , y hace una pequena animacion 
@@ -82,8 +86,8 @@ public class Searcher
 	 {
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
 		 float distance = (documentVector*queryVector);
+		 if(distance<=0.0005f)continue;
 		 distance/=(float)GetMinDistance(queryObj,doc);
-		 if(distance==0)continue;
 		 var snippet = "< "+ distance+" >\n "+doc.Snippet(queryObj.GetTerms()) ;		
 		lista.AddLast((doc.Name,snippet,distance));
 	 }

@@ -1,6 +1,7 @@
 ﻿namespace TextTreatment;
 public static class TextProcessor
 {
+	public static bool Stemin=false;
 
 	public static IEnumerable<string> ProcessWords(string[] words)//devuelve un iterable de las palabras procesadas 
 	{
@@ -16,7 +17,10 @@ public static class TextProcessor
 
 	public static string ProcessWord(string word)//dada una palabra cualquiera devuelve la palabra procesada
 	{
+		if(Stemin)
 		return GetStem(RemoveSigns(ProcessNumbers(Normalize(word))));
+		return (RemoveSigns(ProcessNumbers(Normalize(word))));
+
 	}	
 
 	public static int DistanceBetweenWords(string word1,string word2)//usando el algoritmo de levensgtein devuelve la medida de igualdad entre dos palabras
