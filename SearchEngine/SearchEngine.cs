@@ -86,7 +86,7 @@ public class Searcher
 	 {
 		 var documentVector =bagOfWords.GetDocVector(doc.Name);		 
 		 float distance = (documentVector*queryVector);
-		 if(distance<=0.0005f)continue;
+		 if(distance==0)continue;
 		 distance/=(float)GetMinDistance(queryObj,doc);
 		 var snippet = "< "+ distance+" >\n "+doc.Snippet(queryObj.GetTerms()) ;		
 		lista.AddLast((doc.Name,snippet,distance));

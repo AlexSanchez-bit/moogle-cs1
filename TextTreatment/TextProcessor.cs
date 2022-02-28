@@ -1,7 +1,7 @@
 ﻿namespace TextTreatment;
 public static class TextProcessor
 {
-	public static bool Stemin=false;
+	public static bool Stemin=true;
 
 	public static IEnumerable<string> ProcessWords(string[] words)//devuelve un iterable de las palabras procesadas 
 	{
@@ -19,6 +19,7 @@ public static class TextProcessor
 	{
 		if(Stemin)
 		return GetStem(RemoveSigns(ProcessNumbers(Normalize(word))));
+
 		return (RemoveSigns(ProcessNumbers(Normalize(word))));
 
 	}	
