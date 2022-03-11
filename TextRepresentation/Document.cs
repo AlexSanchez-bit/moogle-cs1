@@ -27,21 +27,21 @@ public class Document:BaseText
 	{
 		StreamReader str = new StreamReader(this.path);
 		string lecture = str.ReadToEnd();
-		if(lecture.Length<100) return lecture;
+		if(lecture.Length<40) return lecture;
 		var processlecture = GetTokens(lecture);
 		int position=0;
 		foreach(var term in terms)
 		{
 			if(this.GetFrequency(term)>0)
-			{
-				position=GetTerm(term).GetPositions()[0];
+			{								
+				position=Array.IndexOf(processlecture,GetTerm(term).OriginalTerms()[0]);
 				break;
 			}
 		}
 		string snippet ="";
-		for(int i = -20; position+i<processlecture.Length && i<20;i++)
+		for(int i =-10; (position+i) < processlecture.Length && i<20 ;i++)
 		{
-			if(position+i<=0)continue;
+			if((position+i)<=0)continue;
 		  snippet+=processlecture[position+i]+" ";
 		}
 		return snippet;
@@ -82,6 +82,9 @@ return false;
 	{
 		int interestTerms = Math.Min(positions1.Length,positions2.Length);
 		int minDistance=int.MaxValue;
+		
+		if(interestTerms==1)return(int) Math.Abs(positions1[0]-positions2[0]);
+
 		for(int i=1;i<interestTerms;i++)
 		{
 			int aux =(int) Math.Abs(positions1[i]-positions2[i-1]);

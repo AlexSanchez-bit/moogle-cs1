@@ -115,7 +115,7 @@ public class Searcher
 				 MinDistance*= dist>0?dist:1;
 			}
 			
-		}
+		}		
 	return MinDistance;
 	}
 	

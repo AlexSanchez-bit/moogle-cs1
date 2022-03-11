@@ -130,7 +130,7 @@ public class Query:BaseText
 	private string GetWord(string text,int position,Direction direction)//obtiene la palabra en 
 						//funcion de la posicion del operador en la consulta
 	{
-		if(position < 0 || position > text.Length || text.Length<2)return "";
+		if(position <=0 || position >=text.Length)return "";
 
 		int i=position;
 		string retVal="";

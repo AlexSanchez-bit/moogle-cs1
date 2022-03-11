@@ -29,7 +29,7 @@ public class BaseText
                  int index =0;
 		foreach(var token in Tokens)
 		{
-			if(token == null || token=="")continue;
+			if(token == null || token=="")continue;		
 			var processedWord = TextProcessor.ProcessWord(token);
 			if(!terms.ContainsKey(processedWord))
 			{
