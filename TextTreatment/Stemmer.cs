@@ -78,7 +78,7 @@ public static class Stemmer {
         }
         
         // Calcular RV: 
-        if(word.Length >=3) {
+        if(word.Length >= 3) {
 
             if( IsConsonant(word[1]) ) {
                 int i = 2;

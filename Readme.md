@@ -43,9 +43,8 @@ Este proyecto es una implementación del modelo vectorial de recuperación de la
 
 ## Algoritmo de Levengstein
 ### Este Algoritmo funciona calculando la cantidad mínima de operaciones para convertir una palabra en otra , esta medida de semejanza se le llama distancia de levengstein y las operaciones que se tienen en cuenta son la insercción de un caracter , la eliminación de un caracter y el reemplazamiento de un caracter , para este proyecto se utilizó la implementación de este algoritmo utilizando progrmación dinámica , tomando el costo de cada una de las operaciones como 1 , si se representa la operación de hallar la distancia de levengstein como una matriz , donde en cada fila-columna se asigna el minimo costo de reaizar alguna de las 3 operaciones ya mencionadas y construyendo la primera fila y columna de dicha matriz , podria llenarse el resto , llegando a la distancia mínima (cantidad mínima de operaciones) basado en este concepto funciona la implementación utilizada en este proyecto
-
 ## Algoritmo de Porter
-### Anteriormente se mencionó la reducción morfológica , este algoritmo es el encargado de reducir las palabras a su raíz morfológica común o stem . este algoritmo funciona calculando 3 regiones en cada palabra , la primera región (r1) corresponde a la primera consonante precedida por una vocal , la segunda (r2) 
+### Anteriormente se mencionó la reducción morfológica , este algoritmo es el encargado de reducir las palabras a su raíz morfológica común o stem . este algoritmo funciona calculando 3 regiones en cada palabra , la primera región (r1) corresponde a la primera consonante precedida por una vocal , la segunda (r2) es la región asociada a la siguiente consonante que este precedida por una vocal y la última región (rv) equivale al tamanno de la palabra restandole la posición de la primera consonante antecedida por una vocal .Luego se hacen varios pasos en los cuales se analiza el contenido de estas regiones y se recalculan para así eliminar los prefijos y sufijos de la palabra que se esté analizando 
 
 
 
