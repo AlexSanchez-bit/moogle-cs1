@@ -75,7 +75,7 @@ public static class TextProcessor
 
 	}
 
-	private static string RemoveSigns(string wrd)//elimina los simbolos raros y todo lo que no sea una letra
+	public static string RemoveSigns(string wrd)//elimina los simbolos raros y todo lo que no sea una letra
 	{
 		string retstring ="";
 		foreach(char a in wrd)
